@@ -4,7 +4,6 @@ import { Box, TextInput, Group, Title, CloseButton } from '@mantine/core';
 import { BluePrintIcon } from '@shared/icon';
 import { debounce } from '@shared/lib';
 import { $searchQuery, setSearchQuery } from '@features/user-list/model';
-import styles from './styles.module.css';
 
 export const Header = () => {
   const [searchQuery, searchQueryChanged] = useUnit([
@@ -39,7 +38,7 @@ export const Header = () => {
   }, [searchQuery]);
 
   return (
-    <Box component="header" className={styles.header}>
+    <Box component="header">
       <Group justify="space-between" align="center">
         <Title order={2} size="h3">
           User Management
@@ -55,7 +54,7 @@ export const Header = () => {
           }
           value={inputValue}
           onChange={handleSearchChange}
-          style={{ width: 400 }}
+          style={{ width: 300 }}
         />
       </Group>
     </Box>

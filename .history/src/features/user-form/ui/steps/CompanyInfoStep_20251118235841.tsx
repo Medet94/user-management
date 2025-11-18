@@ -24,6 +24,7 @@ export function CompanyInfoStep() {
   const handleChange = (field: string, value: any) => {
     setFormData({ [field]: value });
 
+    // Validate on change
     const newErrors = { ...formErrors };
 
     if (field === 'isCurrentlyWorking') {

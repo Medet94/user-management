@@ -1,21 +1,6 @@
-import {
-  TextInput,
-  NumberInput,
-  Select,
-  Stack,
-  Checkbox,
-  Divider,
-  Text,
-  Group,
-} from '@mantine/core';
+import { TextInput, NumberInput, Select, Stack, Checkbox, Divider, Text, Group } from '@mantine/core';
 import { useUnit } from 'effector-react';
-import {
-  $formData,
-  $formErrors,
-  setFormData,
-  setFormErrors,
-  DEPARTMENTS,
-} from '../../model';
+import { $formData, $formErrors, setFormData, setFormErrors, DEPARTMENTS } from '../../model';
 
 export function CompanyInfoStep() {
   const formData = useUnit($formData);
@@ -24,13 +9,12 @@ export function CompanyInfoStep() {
   const handleChange = (field: string, value: any) => {
     setFormData({ [field]: value });
 
+    // Validate on change
     const newErrors = { ...formErrors };
 
     if (field === 'isCurrentlyWorking') {
-      if (
-        value &&
-        (!formData.department || formData.department.trim().length === 0)
-      ) {
+      // When toggling currently working, validate department field
+      if (value && (!formData.department || formData.department.trim().length === 0)) {
         newErrors.department = 'Department is required when currently working';
       } else if (!value) {
         delete newErrors.department;
@@ -38,10 +22,7 @@ export function CompanyInfoStep() {
     }
 
     if (field === 'department') {
-      if (
-        formData.isCurrentlyWorking &&
-        (!value || value.trim().length === 0)
-      ) {
+      if (formData.isCurrentlyWorking && (!value || value.trim().length === 0)) {
         newErrors.department = 'Department is required when currently working';
       } else {
         delete newErrors.department;
@@ -104,66 +85,44 @@ export function CompanyInfoStep() {
 
       <Stack gap="xs">
         <Group>
-          <Text fw={500} w={120}>
-            Name:
-          </Text>
-          <Text>
-            {formData.firstName} {formData.lastName}
-          </Text>
+          <Text fw={500} w={120}>Name:</Text>
+          <Text>{formData.firstName} {formData.lastName}</Text>
         </Group>
         <Group>
-          <Text fw={500} w={120}>
-            Age:
-          </Text>
+          <Text fw={500} w={120}>Age:</Text>
           <Text>{formData.age}</Text>
         </Group>
         <Group>
-          <Text fw={500} w={120}>
-            Gender:
-          </Text>
+          <Text fw={500} w={120}>Gender:</Text>
           <Text>{formData.gender}</Text>
         </Group>
         <Group>
-          <Text fw={500} w={120}>
-            Email:
-          </Text>
+          <Text fw={500} w={120}>Email:</Text>
           <Text>{formData.email}</Text>
         </Group>
         <Group>
-          <Text fw={500} w={120}>
-            Phone:
-          </Text>
+          <Text fw={500} w={120}>Phone:</Text>
           <Text>{formData.phone}</Text>
         </Group>
         <Group>
-          <Text fw={500} w={120}>
-            Address:
-          </Text>
-          <Text>
-            {formData.address}, {formData.city}
-          </Text>
+          <Text fw={500} w={120}>Address:</Text>
+          <Text>{formData.address}, {formData.city}</Text>
         </Group>
         {formData.isInternational && (
           <Group>
-            <Text fw={500} w={120}>
-              Country:
-            </Text>
+            <Text fw={500} w={120}>Country:</Text>
             <Text>{formData.country}</Text>
           </Group>
         )}
         {formData.companyName && (
           <Group>
-            <Text fw={500} w={120}>
-              Company:
-            </Text>
+            <Text fw={500} w={120}>Company:</Text>
             <Text>{formData.companyName}</Text>
           </Group>
         )}
         {formData.jobTitle && (
           <Group>
-            <Text fw={500} w={120}>
-              Job Title:
-            </Text>
+            <Text fw={500} w={120}>Job Title:</Text>
             <Text>{formData.jobTitle}</Text>
           </Group>
         )}

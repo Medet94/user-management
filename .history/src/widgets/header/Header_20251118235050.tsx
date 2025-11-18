@@ -55,7 +55,7 @@ export const Header = () => {
           }
           value={inputValue}
           onChange={handleSearchChange}
-          style={{ width: 400 }}
+          style={{ width: 300 }}
         />
       </Group>
     </Box>
