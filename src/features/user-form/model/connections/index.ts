@@ -3,7 +3,7 @@ import { fetchUserForEditFx, updateUserFx, createUserFx } from '../effetcs';
 import { loadUserForEdit, submitForm } from '../events';
 import { $editUserId, $formData, $formMode } from '../stores';
 import type { UserFormData } from '../types';
-import { addUserToList, updateUserInList } from '@shared/state/users/model';
+import { addUserToList, updateUserInList } from '@features/user-list/model';
 
 sample({
   clock: loadUserForEdit,
@@ -36,11 +36,13 @@ sample({
   ),
 });
 
+// Add created user to list
 sample({
   clock: createUserFx.doneData,
   target: addUserToList,
 });
 
+// Update user in list
 sample({
   clock: updateUserFx.doneData,
   target: updateUserInList,

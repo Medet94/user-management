@@ -3,7 +3,7 @@ import { useUnit } from 'effector-react';
 import { Box, TextInput, Group, Title, CloseButton } from '@mantine/core';
 import { BluePrintIcon } from '@shared/icon';
 import { debounce } from '@shared/lib';
-import { $searchQuery, setSearchQuery } from '@shared/state/users/model';
+import { $searchQuery, setSearchQuery } from '@features/user-list/model';
 
 export const Header = () => {
   const searchQuery = useUnit($searchQuery);

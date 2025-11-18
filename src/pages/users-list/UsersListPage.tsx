@@ -13,9 +13,7 @@ import {
   ActionIcon,
   SimpleGrid,
 } from '@mantine/core';
-
 import { BluePrintIcon, HighlightText } from '@shared';
-
 import {
   $users,
   $isLoading,
@@ -25,15 +23,15 @@ import {
   loadMoreUsers,
   fetchUsersFx,
   setViewMode,
-} from '@shared/state/users/model';
-
+} from '@features/user-list/model';
 import {
   setFormMode,
   loadUserForEdit,
   openModal,
 } from '@features/user-form/model';
+import { UserDetailsDrawer, openUserDetails } from '@features/user-details';
 
-export const UsersListPage = () => {
+export function UsersListPage() {
   const users = useUnit($users);
   const isLoading = useUnit($isLoading);
   const hasMore = useUnit($hasMore);
@@ -45,10 +43,15 @@ export const UsersListPage = () => {
     openModal();
   };
 
-  const handleEditUser = (userId: number) => {
+  const handleEditUser = (userId: number, event?: React.MouseEvent) => {
+    event?.stopPropagation();
     setFormMode('edit');
     loadUserForEdit(userId);
     openModal();
+  };
+
+  const handleViewUser = (userId: number) => {
+    openUserDetails(userId);
   };
 
   useEffect(() => {
@@ -74,6 +77,7 @@ export const UsersListPage = () => {
 
   return (
     <Stack gap="lg">
+      <UserDetailsDrawer />
       <Box style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
         <Group gap="xs">
           <ActionIcon
@@ -129,6 +133,8 @@ export const UsersListPage = () => {
                 padding="lg"
                 radius="md"
                 withBorder
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleViewUser(user.id)}
               >
                 <Group wrap="nowrap" align="flex-start">
                   <Avatar
@@ -173,7 +179,7 @@ export const UsersListPage = () => {
                   <Button
                     variant="light"
                     leftSection={<BluePrintIcon name="edit" size={16} />}
-                    onClick={() => handleEditUser(user.id)}
+                    onClick={(e) => handleEditUser(user.id, e)}
                   >
                     Edit
                   </Button>
@@ -209,6 +215,8 @@ export const UsersListPage = () => {
                   padding="lg"
                   radius="md"
                   withBorder
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => handleViewUser(user.id)}
                 >
                   <Stack gap="md" align="center">
                     <Avatar
@@ -258,7 +266,7 @@ export const UsersListPage = () => {
                       variant="light"
                       fullWidth
                       leftSection={<BluePrintIcon name="edit" size={16} />}
-                      onClick={() => handleEditUser(user.id)}
+                      onClick={(e) => handleEditUser(user.id, e)}
                     >
                       Edit
                     </Button>
@@ -285,4 +293,4 @@ export const UsersListPage = () => {
       )}
     </Stack>
   );
-};
+}
