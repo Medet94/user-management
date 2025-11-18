@@ -18,8 +18,6 @@ import {
   closeUserDetails,
 } from '../model';
 
-import styles from './styles.module.css';
-
 export const UserDetailsDrawer = () => {
   const user = useUnit($selectedUser);
   const isOpen = useUnit($isDetailsOpen);
@@ -34,7 +32,7 @@ export const UserDetailsDrawer = () => {
       title="User Details"
       overlayProps={{ backgroundOpacity: 0.55, blur: 3 }}
     >
-      <Box pos="relative" className={styles.drawerContainer}>
+      <Box style={{ position: 'relative' }}>
         <LoadingOverlay visible={isLoading} />
 
         {user && (

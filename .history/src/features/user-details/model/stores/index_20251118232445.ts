@@ -1,6 +1,6 @@
 import { createStore } from 'effector';
 import { fetchUserDetailsFx } from '../effects';
-import { closeUserDetails, openUserDetails } from '../events';
+import { closeUserDetails } from '../events';
 import type { User } from '@entities/user';
 
 export const $selectedUser = createStore<User | null>(null);
@@ -12,5 +12,5 @@ $selectedUser
   .reset(closeUserDetails);
 
 $isDetailsOpen
-  .on(openUserDetails, () => true)
+  .on(fetchUserDetailsFx, () => true)
   .on(closeUserDetails, () => false);

@@ -1,8 +1,10 @@
 import { createStore } from 'effector';
 import { fetchUsersFx, searchUsersFx } from '../effects';
+
 import {
   resetUsersList,
   setSearchQuery,
+  setViewMode,
   addUserToList,
   updateUserInList,
 } from '../events';
@@ -15,7 +17,9 @@ export const $hasMore = createStore(true);
 export const $currentSkip = createStore(0);
 export const $searchQuery = createStore('');
 export const $total = createStore(0);
+export const $viewMode = createStore<'list' | 'grid'>('list');
 
+// Updates
 $users
   .on(fetchUsersFx.doneData, (state, response) => {
     const merged = [...state, ...response.users];
@@ -43,12 +47,14 @@ $hasMore
     return response.skip + response.limit < response.total;
   })
   .on(searchUsersFx.doneData, (_, response) => {
+    // When search query is empty, we fetched first page, so check if there's more
     return response.skip + response.limit < response.total;
   });
 
 $currentSkip
   .on(fetchUsersFx.doneData, (_, response) => response.skip + response.limit)
   .on(searchUsersFx.doneData, (_, response) => {
+    // When search is cleared, we start from the loaded amount
     return response.skip + response.limit;
   })
   .reset(resetUsersList);
@@ -58,3 +64,5 @@ $searchQuery.on(setSearchQuery, (_, query) => query).reset(resetUsersList);
 $total
   .on(fetchUsersFx.doneData, (_, response) => response.total)
   .on(searchUsersFx.doneData, (_, response) => response.total);
+
+$viewMode.on(setViewMode, (_, mode) => mode);

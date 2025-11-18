@@ -33,6 +33,7 @@ import styles from './styles.module.css';
 
 export const UsersListPage = () => {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [open, setOpen] = useState<boolean>(false);
 
   const users = useUnit($users);
   const isLoading = useUnit($isLoading);
@@ -52,6 +53,7 @@ export const UsersListPage = () => {
   };
 
   const handleViewUser = (userId: number) => {
+    setOpen(true);
     openUserDetails(userId);
   };
 
@@ -78,7 +80,7 @@ export const UsersListPage = () => {
 
   return (
     <Stack gap="lg">
-      <UserDetailsDrawer />
+      <UserDetailsDrawer open={open} />
       <Box style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
         <Group gap="xs">
           <ActionIcon

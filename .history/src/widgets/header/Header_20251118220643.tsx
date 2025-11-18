@@ -6,10 +6,7 @@ import { debounce } from '@shared/lib';
 import { $searchQuery, setSearchQuery } from '@features/user-list/model';
 
 export const Header = () => {
-  const [searchQuery, searchQueryChanged] = useUnit([
-    $searchQuery,
-    setSearchQuery,
-  ]);
+  const searchQuery = useUnit($searchQuery);
   const [inputValue, setInputValue] = useState('');
 
   const debouncedSearch = useCallback(
@@ -22,8 +19,8 @@ export const Header = () => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
-    //searchQueryChanged(value);
-    debouncedSearch(value);
+    setSearchQuery(value);
+    //debouncedSearch(value);
   };
 
   const handleClearSearch = () => {

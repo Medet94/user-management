@@ -19,8 +19,10 @@ import {
   $isLoading,
   $hasMore,
   $searchQuery,
+  // $viewMode,
   loadMoreUsers,
   fetchUsersFx,
+  // setViewMode,
 } from '@features/user-list/model';
 import {
   setFormMode,
@@ -38,6 +40,7 @@ export const UsersListPage = () => {
   const isLoading = useUnit($isLoading);
   const hasMore = useUnit($hasMore);
   const searchQuery = useUnit($searchQuery);
+  //const viewMode = useUnit($viewMode);
 
   const handleOpenModal = () => {
     setFormMode('create');

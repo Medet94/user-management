@@ -19,8 +19,10 @@ import {
   $isLoading,
   $hasMore,
   $searchQuery,
+  $viewMode,
   loadMoreUsers,
   fetchUsersFx,
+  setViewMode,
 } from '@features/user-list/model';
 import {
   setFormMode,
@@ -32,12 +34,13 @@ import { UserDetailsDrawer, openUserDetails } from '@features/user-details';
 import styles from './styles.module.css';
 
 export const UsersListPage = () => {
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [] = useState<'list' | 'grid'>('list');
 
   const users = useUnit($users);
   const isLoading = useUnit($isLoading);
   const hasMore = useUnit($hasMore);
   const searchQuery = useUnit($searchQuery);
+  const viewMode = useUnit($viewMode);
 
   const handleOpenModal = () => {
     setFormMode('create');

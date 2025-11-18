@@ -3,6 +3,7 @@ import { fetchUsersFx, searchUsersFx } from '../effects';
 import {
   resetUsersList,
   setSearchQuery,
+  setViewMode,
   addUserToList,
   updateUserInList,
 } from '../events';
@@ -15,6 +16,7 @@ export const $hasMore = createStore(true);
 export const $currentSkip = createStore(0);
 export const $searchQuery = createStore('');
 export const $total = createStore(0);
+export const $viewMode = createStore<'list' | 'grid'>('list');
 
 $users
   .on(fetchUsersFx.doneData, (state, response) => {
@@ -58,3 +60,5 @@ $searchQuery.on(setSearchQuery, (_, query) => query).reset(resetUsersList);
 $total
   .on(fetchUsersFx.doneData, (_, response) => response.total)
   .on(searchUsersFx.doneData, (_, response) => response.total);
+
+$viewMode.on(setViewMode, (_, mode) => mode);

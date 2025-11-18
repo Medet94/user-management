@@ -18,23 +18,31 @@ import {
   closeUserDetails,
 } from '../model';
 
-import styles from './styles.module.css';
+interface UserDetailsProps {
+  open: boolean;
+  close: boolean;
+}
 
-export const UserDetailsDrawer = () => {
+export const UserDetailsDrawer = ({ open, close }: UserDetailsProps) => {
   const user = useUnit($selectedUser);
   const isOpen = useUnit($isDetailsOpen);
   const isLoading = useUnit($isLoadingDetails);
 
+  const handleClose = () => {
+    closeUserDetails();
+    close(false);
+  };
+
   return (
     <Drawer
-      opened={isOpen}
-      onClose={closeUserDetails}
+      opened={open}
+      onClose={handleClose}
       position="right"
       size="lg"
       title="User Details"
       overlayProps={{ backgroundOpacity: 0.55, blur: 3 }}
     >
-      <Box pos="relative" className={styles.drawerContainer}>
+      <Box pos="relative">
         <LoadingOverlay visible={isLoading} />
 
         {user && (

@@ -22,8 +22,8 @@ export const Header = () => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
-    //searchQueryChanged(value);
-    debouncedSearch(value);
+    searchQueryChanged(value);
+    // debouncedSearch(value);
   };
 
   const handleClearSearch = () => {
