@@ -31,8 +31,6 @@ import {
 } from '@features/user-form/model';
 import { UserDetailsDrawer, openUserDetails } from '@features/user-details';
 
-import styles from './styles.module.css';
-
 export const UsersListPage = () => {
   const users = useUnit($users);
   const isLoading = useUnit($isLoading);
@@ -131,7 +129,7 @@ export const UsersListPage = () => {
             {users.map((user) => (
               <Card
                 key={user.id}
-                className={styles.userCard}
+                className="user-card"
                 shadow="sm"
                 padding="lg"
                 radius="md"
@@ -214,7 +212,6 @@ export const UsersListPage = () => {
               {users.map((user) => (
                 <Card
                   key={user.id}
-                  className={styles.userCard}
                   shadow="sm"
                   padding="lg"
                   radius="md"

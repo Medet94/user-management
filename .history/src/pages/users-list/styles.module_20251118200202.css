@@ -1,0 +1,9 @@
+.userCard {
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.userCard:hover {
+  background-color: #adcbf8; /* Светло-голубой, приятный для UI */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #bdc2ca;
+}

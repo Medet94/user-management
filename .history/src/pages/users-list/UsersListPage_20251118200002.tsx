@@ -131,7 +131,7 @@ export const UsersListPage = () => {
             {users.map((user) => (
               <Card
                 key={user.id}
-                className={styles.userCard}
+                className="user-card"
                 shadow="sm"
                 padding="lg"
                 radius="md"
@@ -214,7 +214,6 @@ export const UsersListPage = () => {
               {users.map((user) => (
                 <Card
                   key={user.id}
-                  className={styles.userCard}
                   shadow="sm"
                   padding="lg"
                   radius="md"
