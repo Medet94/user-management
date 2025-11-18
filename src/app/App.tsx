@@ -3,10 +3,12 @@ import { AppProviders } from './providers';
 import { UsersListPage } from '@pages/users-list';
 import { Header } from '@widgets/header';
 import { Footer } from '@widgets/footer';
+import { UserFormModal } from '@features/user-form';
 
-function App() {
+const App = () => {
   return (
     <AppProviders>
+      <UserFormModal />
       <AppShell
         header={{ height: 70 }}
         footer={{ height: 60 }}
@@ -29,6 +31,6 @@ function App() {
       </AppShell>
     </AppProviders>
   );
-}
+};
 
 export default App;

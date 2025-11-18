@@ -1,26 +1,57 @@
 import { useEffect, useCallback } from 'react';
 import { useUnit } from 'effector-react';
-import { Stack, Button, Box, Center, Loader, Text } from '@mantine/core';
-import { BluePrintIcon } from '@shared/icon';
+import {
+  Stack,
+  Button,
+  Box,
+  Center,
+  Loader,
+  Text,
+  Group,
+  Avatar,
+  Card,
+  ActionIcon,
+  SimpleGrid,
+} from '@mantine/core';
+import { BluePrintIcon, HighlightText } from '@shared';
 import {
   $users,
   $isLoading,
   $hasMore,
+  $searchQuery,
+  $viewMode,
   loadMoreUsers,
   fetchUsersFx,
+  setViewMode,
 } from '@features/user-list/model';
+import {
+  setFormMode,
+  loadUserForEdit,
+  openModal,
+} from '@features/user-form/model';
 
 export function UsersListPage() {
   const users = useUnit($users);
   const isLoading = useUnit($isLoading);
   const hasMore = useUnit($hasMore);
+  const searchQuery = useUnit($searchQuery);
+  const viewMode = useUnit($viewMode);
 
-  // Initial load
+  const handleOpenModal = () => {
+    setFormMode('create');
+    openModal();
+  };
+
+  const handleEditUser = (userId: number) => {
+    setFormMode('edit');
+    loadUserForEdit(userId);
+    openModal();
+  };
+
   useEffect(() => {
     fetchUsersFx({ limit: 10, skip: 0 });
   }, []);
 
-  // Infinite scroll handler
   const handleScroll = useCallback(() => {
     if (isLoading || !hasMore) return;
 
@@ -28,13 +59,11 @@ export function UsersListPage() {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
 
-    // Trigger load more when user scrolls to bottom (with 100px threshold)
     if (scrollTop + windowHeight >= documentHeight - 100) {
       loadMoreUsers();
     }
   }, [isLoading, hasMore]);
 
-  // Attach scroll listener
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -42,8 +71,27 @@ export function UsersListPage() {
 
   return (
     <Stack gap="lg">
-      <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button leftSection={<BluePrintIcon name="user" size={16} />}>
+      <Box style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+        <Group gap="xs">
+          <ActionIcon
+            variant={viewMode === 'list' ? 'filled' : 'default'}
+            onClick={() => setViewMode('list')}
+            size="lg"
+          >
+            <BluePrintIcon name="list" size={18} />
+          </ActionIcon>
+          <ActionIcon
+            variant={viewMode === 'grid' ? 'filled' : 'default'}
+            onClick={() => setViewMode('grid')}
+            size="lg"
+          >
+            <BluePrintIcon name="grid" size={18} />
+          </ActionIcon>
+        </Group>
+        <Button
+          leftSection={<BluePrintIcon name="user" size={16} />}
+          onClick={handleOpenModal}
+        >
           Add New User
         </Button>
       </Box>
@@ -54,37 +102,89 @@ export function UsersListPage() {
         </Center>
       )}
 
-      {users.length > 0 && (
+      {!isLoading && users.length === 0 && searchQuery && (
+        <Center py="xl">
+          <Stack align="center" gap="sm">
+            <BluePrintIcon name="search" size={48} color="#ccc" />
+            <Text size="lg" fw={500} c="dimmed">
+              No results found
+            </Text>
+            <Text size="sm" c="dimmed">
+              Try adjusting your search terms
+            </Text>
+          </Stack>
+        </Center>
+      )}
+
+      {users.length > 0 && viewMode === 'list' && (
         <Center>
           <Stack gap="md" style={{ width: '100%', maxWidth: 800 }}>
             {users.map((user) => (
-              <Box
+              <Card
                 key={user.id}
-                p="md"
-                style={{
-                  border: '1px solid #e0e0e0',
-                  borderRadius: 8,
-                  backgroundColor: '#fff',
-                }}
+                shadow="sm"
+                padding="lg"
+                radius="md"
+                withBorder
               >
-                <Text fw={500}>
-                  {user.firstName} {user.lastName}
-                </Text>
-                <Text size="sm" c="dimmed">
-                  {user.email}
-                </Text>
-              </Box>
+                <Group wrap="nowrap" align="flex-start">
+                  <Avatar
+                    src={user.image}
+                    size={80}
+                    radius="md"
+                    alt={`${user.firstName} ${user.lastName}`}
+                  />
+
+                  <Box style={{ flex: 1 }}>
+                    <Text fw={600} size="lg">
+                      <HighlightText
+                        text={`${user.firstName} ${user.lastName}`}
+                        highlight={searchQuery}
+                      />
+                    </Text>
+
+                    <Stack gap="xs" mt="xs">
+                      <Group gap="xs">
+                        <BluePrintIcon name="envelope" size={14} />
+                        <Text size="sm" c="dimmed">
+                          {user.email}
+                        </Text>
+                      </Group>
+
+                      <Group gap="xs">
+                        <BluePrintIcon name="phone" size={14} />
+                        <Text size="sm" c="dimmed">
+                          {user.phone}
+                        </Text>
+                      </Group>
+
+                      <Group gap="xs">
+                        <BluePrintIcon name="calendar" size={14} />
+                        <Text size="sm" c="dimmed">
+                          {user.age} years old
+                        </Text>
+                      </Group>
+                    </Stack>
+                  </Box>
+
+                  <Button
+                    variant="light"
+                    leftSection={<BluePrintIcon name="edit" size={16} />}
+                    onClick={() => handleEditUser(user.id)}
+                  >
+                    Edit
+                  </Button>
+                </Group>
+              </Card>
             ))}
 
-            {/* Loading indicator for infinite scroll */}
             {isLoading && users.length > 0 && (
               <Center py="md">
                 <Loader size="md" />
               </Center>
             )}
 
-            {/* No more data indicator */}
-            {!hasMore && users.length > 0 && (
+            {!hasMore && users.length > 0 && !searchQuery && (
               <Center py="md">
                 <Text size="sm" c="dimmed">
                   No more users to load
@@ -92,6 +192,92 @@ export function UsersListPage() {
               </Center>
             )}
           </Stack>
+        </Center>
+      )}
+
+      {users.length > 0 && viewMode === 'grid' && (
+        <Center>
+          <Box style={{ width: '100%', maxWidth: 1200 }}>
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
+              {users.map((user) => (
+                <Card
+                  key={user.id}
+                  shadow="sm"
+                  padding="lg"
+                  radius="md"
+                  withBorder
+                >
+                  <Stack gap="md" align="center">
+                    <Avatar
+                      src={user.image}
+                      size={120}
+                      radius="md"
+                      alt={`${user.firstName} ${user.lastName}`}
+                    />
+
+                    <Box style={{ textAlign: 'center', width: '100%' }}>
+                      <Text fw={600} size="lg">
+                        <HighlightText
+                          text={`${user.firstName} ${user.lastName}`}
+                          highlight={searchQuery}
+                        />
+                      </Text>
+
+                      <Stack gap="xs" mt="md">
+                        <Group gap="xs" justify="center">
+                          <BluePrintIcon name="envelope" size={14} />
+                          <Text
+                            size="sm"
+                            c="dimmed"
+                            style={{ wordBreak: 'break-all' }}
+                          >
+                            {user.email}
+                          </Text>
+                        </Group>
+
+                        <Group gap="xs" justify="center">
+                          <BluePrintIcon name="phone" size={14} />
+                          <Text size="sm" c="dimmed">
+                            {user.phone}
+                          </Text>
+                        </Group>
+
+                        <Group gap="xs" justify="center">
+                          <BluePrintIcon name="calendar" size={14} />
+                          <Text size="sm" c="dimmed">
+                            {user.age} years old
+                          </Text>
+                        </Group>
+                      </Stack>
+                    </Box>
+
+                    <Button
+                      variant="light"
+                      fullWidth
+                      leftSection={<BluePrintIcon name="edit" size={16} />}
+                      onClick={() => handleEditUser(user.id)}
+                    >
+                      Edit
+                    </Button>
+                  </Stack>
+                </Card>
+              ))}
+            </SimpleGrid>
+
+            {isLoading && users.length > 0 && (
+              <Center py="md" mt="lg">
+                <Loader size="md" />
+              </Center>
+            )}
+
+            {!hasMore && users.length > 0 && !searchQuery && (
+              <Center py="md" mt="lg">
+                <Text size="sm" c="dimmed">
+                  No more users to load
+                </Text>
+              </Center>
+            )}
+          </Box>
         </Center>
       )}
     </Stack>

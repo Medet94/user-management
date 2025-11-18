@@ -1,9 +1,8 @@
 import axios from 'axios';
-
-export const API_BASE_URL = 'https://dummyjson.com';
+import { config } from '../config';
 
 export const apiClient = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: config.api.baseUrl,
   headers: {
     'Content-Type': 'application/json',
   },

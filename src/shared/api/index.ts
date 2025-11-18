@@ -1,1 +1,1 @@
-export { apiClient, API_BASE_URL } from './base';
+export { apiClient } from './base';
