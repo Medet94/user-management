@@ -2,7 +2,7 @@
 export { apiClient } from './api';
 
 // Config
-export { config } from './config/config';
+export { config } from './config';
 
 // Lib
 export * from './lib';

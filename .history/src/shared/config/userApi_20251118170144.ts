@@ -39,8 +39,8 @@ export const userApi = {
   },
 };
 
-export const getUserById = async (id: number) => {
-  const response = await apiClient.get<User>(`/users/${id}`);
+// export const getUserById = async (id: number) => {
+//   const response = await apiClient.get<User>(`/users/${id}`);
 
-  return response.data;
-};
+//   return response.data;
+// };

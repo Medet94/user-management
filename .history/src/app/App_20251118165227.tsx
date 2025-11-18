@@ -1,6 +1,6 @@
 import { AppShell, Container } from '@mantine/core';
 import { AppProviders } from './providers';
-import { UsersListPage } from '@/pages/ui/users-list';
+import { UsersListPage } from '@pages/users-list';
 import { Header } from '@widgets/header';
 import { Footer } from '@widgets/footer';
 import { UserFormModal } from '@features/user-form';
