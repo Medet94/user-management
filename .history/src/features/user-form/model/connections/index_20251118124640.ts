@@ -36,11 +36,13 @@ sample({
   ),
 });
 
+// Add created user to list
 sample({
   clock: createUserFx.doneData,
   target: addUserToList,
 });
 
+// Update user in list
 sample({
   clock: updateUserFx.doneData,
   target: updateUserInList,

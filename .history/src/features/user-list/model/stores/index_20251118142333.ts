@@ -21,6 +21,7 @@ export const $viewMode = createStore<'list' | 'grid'>('list');
 // Updates
 $users
   .on(fetchUsersFx.doneData, (state, response) => {
+    console.log(response);
     const merged = [...state, ...response.users];
 
     // Убираем дубли по id

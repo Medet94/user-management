@@ -12,7 +12,7 @@ export const userApi = {
       `/users?limit=${limit}&skip=${skip}`
     );
 
-    //    console.log(response.data);
+    console.log(response.data);
 
     return response.data;
   },

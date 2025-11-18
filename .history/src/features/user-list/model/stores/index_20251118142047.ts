@@ -21,14 +21,9 @@ export const $viewMode = createStore<'list' | 'grid'>('list');
 // Updates
 $users
   .on(fetchUsersFx.doneData, (state, response) => {
-    const merged = [...state, ...response.users];
+    console.log(response);
 
-    // Убираем дубли по id
-    const unique = merged.filter(
-      (item, index, arr) => index === arr.findIndex((u) => u.id === item.id)
-    );
-
-    return unique;
+    return [...state, ...response.users];
   })
   .on(searchUsersFx.doneData, (_, response) => response.users)
   .on(addUserToList, (state, user) => [user, ...state])

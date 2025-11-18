@@ -11,9 +11,6 @@ export const userApi = {
     const response = await apiClient.get<UsersResponse>(
       `/users?limit=${limit}&skip=${skip}`
     );
-
-    //    console.log(response.data);
-
     return response.data;
   },
 
@@ -26,7 +23,6 @@ export const userApi = {
 
   async getUser(id: number): Promise<User> {
     const response = await apiClient.get<User>(`/users/${id}`);
-
     return response.data;
   },
 

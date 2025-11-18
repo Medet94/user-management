@@ -30,7 +30,7 @@ import {
   openModal,
 } from '@features/user-form/model';
 
-export const UsersListPage = () => {
+export function UsersListPage() {
   const users = useUnit($users);
   const isLoading = useUnit($isLoading);
   const hasMore = useUnit($hasMore);
@@ -282,4 +282,4 @@ export const UsersListPage = () => {
       )}
     </Stack>
   );
-};
+}

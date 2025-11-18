@@ -28,7 +28,7 @@ export interface UsersResponse {
   limit: number;
 }
 
-export interface CreateUser {
+export interface CreateUserDto {
   firstName: string;
   lastName: string;
   age: number;
@@ -49,6 +49,6 @@ export interface CreateUser {
   };
 }
 
-export interface UpdateUser extends CreateUser {
+export interface UpdateUserDto extends CreateUserDto {
   id: number;
 }

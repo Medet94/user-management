@@ -37,6 +37,8 @@ export const UsersListPage = () => {
   const searchQuery = useUnit($searchQuery);
   const viewMode = useUnit($viewMode);
 
+  // console.log(users);
+
   const handleOpenModal = () => {
     setFormMode('create');
     openModal();
