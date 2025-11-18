@@ -6,7 +6,7 @@ import { loadMoreUsers, setSearchQuery } from '../events';
 sample({
   clock: loadMoreUsers,
   source: { skip: $currentSkip, query: $searchQuery },
-  filter: ({ query }, _clock) => $hasMore.getState() && !query.trim(),
+  filter: ({ query }) => $hasMore.getState() && query.trim() === '',
   fn: ({ skip }) => ({ limit: 10, skip }),
   target: fetchUsersFx,
 });

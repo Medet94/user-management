@@ -25,7 +25,7 @@ import {
   loadMoreUsers,
   fetchUsersFx,
   setViewMode,
-} from '@shared/state/users/model';
+} from '@shared/state/users';
 
 import {
   setFormMode,

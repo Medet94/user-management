@@ -52,10 +52,7 @@ $hasMore
 
 $currentSkip
   .on(fetchUsersFx.doneData, (state, response) => state + response.limit)
-  .on(searchUsersFx.doneData, (_, response) => {
-    // When search is cleared, we start from the loaded amount
-    return response.skip + response.limit;
-  })
+  .on(searchUsersFx.doneData, () => 0)
   .reset(resetUsersList);
 
 $searchQuery.on(setSearchQuery, (_, query) => query).reset(resetUsersList);
