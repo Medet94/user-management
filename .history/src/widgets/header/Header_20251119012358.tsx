@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useUnit } from 'effector-react';
 import { Box, TextInput, Group, Title, CloseButton } from '@mantine/core';
 import { BluePrintIcon } from '@shared/icon';
-//import { debounce } from '@shared/lib';
 import { $searchQuery, setSearchQuery } from '@features/user-list/model';
 import styles from './styles.module.css';
 
@@ -10,18 +9,10 @@ export const Header = () => {
   const searchQuery = useUnit($searchQuery);
   const [inputValue, setInputValue] = useState('');
 
-  // const debouncedSearch = useCallback(
-  //   debounce((value: string) => {
-  //     setSearchQuery(value);
-  //   }, 300),
-  //   []
-  // );
-
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
     setSearchQuery(value);
-    // debouncedSearch(value);
   };
 
   const handleClearSearch = () => {

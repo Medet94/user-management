@@ -18,6 +18,6 @@ sample({
 });
 
 sample({
-  clock: searchDebounced,
+  clock: setSearchQuery,
   target: searchUsersFx,
 });
