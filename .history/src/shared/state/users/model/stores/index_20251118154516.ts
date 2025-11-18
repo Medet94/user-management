@@ -51,8 +51,7 @@ $hasMore
   });
 
 $currentSkip
-  .on(fetchUsersFx.doneData, (_, response) => response.skip + response.limit)
-
+  .on(fetchUsersFx.doneData, (state, response) => state + response.limit)
   .on(searchUsersFx.doneData, (_, response) => {
     // When search is cleared, we start from the loaded amount
     return response.skip + response.limit;

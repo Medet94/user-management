@@ -1,6 +1,6 @@
 import { createEffect } from 'effector';
 import { userApi } from '@shared/config/userApi';
-import type { CreateUser, UpdateUser } from '@shared/model/types';
+import type { CreateUserDto, UpdateUserDto } from '@entities/user';
 import type { UserFormData } from '../types';
 
 export const fetchUserForEditFx = createEffect(async (userId: number) => {
@@ -8,7 +8,7 @@ export const fetchUserForEditFx = createEffect(async (userId: number) => {
 });
 
 export const createUserFx = createEffect(async (formData: UserFormData) => {
-  const userData: CreateUser = {
+  const userData: CreateUserDto = {
     firstName: formData.firstName,
     lastName: formData.lastName,
     age: Number(formData.age),
@@ -35,7 +35,7 @@ export const createUserFx = createEffect(async (formData: UserFormData) => {
 
 export const updateUserFx = createEffect(
   async ({ id, formData }: { id: number; formData: UserFormData }) => {
-    const userData: UpdateUser = {
+    const userData: UpdateUserDto = {
       id,
       firstName: formData.firstName,
       lastName: formData.lastName,
