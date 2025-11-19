@@ -37,6 +37,7 @@ export function UserFormModal() {
   };
 
   const handleNext = () => {
+    // Validate current step before moving forward
     let errors = {};
     if (currentStep === 0) {
       errors = validateStep1(formData);

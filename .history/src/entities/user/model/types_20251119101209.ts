@@ -97,6 +97,6 @@ export interface CreateUser {
   };
 }
 
-export interface UpdateUser extends CreateUser {
+export interface UpdateUserDto extends CreateUser {
   id: number;
 }

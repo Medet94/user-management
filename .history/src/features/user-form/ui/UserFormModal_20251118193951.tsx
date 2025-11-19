@@ -37,6 +37,7 @@ export function UserFormModal() {
   };
 
   const handleNext = () => {
+    // Validate current step before moving forward
     let errors = {};
     if (currentStep === 0) {
       errors = validateStep1(formData);
@@ -49,11 +50,13 @@ export function UserFormModal() {
       return;
     }
 
+    // Clear errors and move to next step
     setFormErrors({});
     nextStep();
   };
 
   const handleSubmit = () => {
+    // Validate step 3 before submitting
     const errors = validateStep3(formData);
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
