@@ -4,7 +4,7 @@ import { fetchUsersFx, searchUsersFx } from '../effects';
 import { $searchQuery, $currentSkip, $hasMore } from '../stores';
 import { loadMoreUsers, setSearchQuery } from '../events';
 
-const searchDebounced = debounce({
+export const searchDebounced = debounce({
   source: setSearchQuery,
   timeout: 300,
 });
